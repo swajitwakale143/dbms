@@ -1,0 +1,41 @@
+PL/SQL use of Control Structure and Exception Handling (Borrower and Fine)
+
+Create database ass4;
+Use ass4;
+Create table borrower(rollNo int(11), name char(20), dateOfIssue date, bname char(20), status(1));
+Desc borrower;
+Alter table borrower add primary key(rollNo);
+Create table fine(rollNo int(11), fDate date, amt int(11), foreign key(rollNo) references borrower(rollNo));
+Insert into borrower(1, ‘a’, “2020-11-01”, ‘Java’, ‘I’);
+Insert into borrower(1, ‘a’, “2020-11-01”, ‘Java’, ‘I’);
+Insert into borrower(1, ‘a’, “2020-11-01”, ‘Java’, ‘I’);
+Insert into borrower(1, ‘a’, “2020-11-01”, ‘Java’, ‘I’);
+Select * from borrower;
+Select * from fine;
+
+
+delimiter $
+create procedure fine_calculation(IN rno int(3), bname char(20))
+begin
+declare i_date date;
+declare diff int;
+declare fine_amt int;
+declare exit handler for sqlexception select 'Table not Found';
+select dateofIssue into i_date from borrower where rollNo = rno and bname = bname;
+select datediff(curdate(), i_date) into diff;
+if(diff>15 and diff<=30) then
+set fine_amt = diff*5;
+insert into fine values(rno,curdate(),fine_amt);
+elseif(diff>30) then
+set fine_amt = 15*5 + (diff-30)*50;
+insert into fine values(rno,curdate(),fine_amt);
+end if;
+update borrower set status = 'R' where rollin = rno and bname = bname;
+end;
+$
+
+
+Delimiter ;
+Call fine_calculation(3,’DBMS’);
+Select * from fine;
+Select * from borrower;
