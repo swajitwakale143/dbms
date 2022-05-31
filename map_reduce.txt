@@ -1,0 +1,21 @@
+MongoDB Map Reduce
+
+Use ass4;
+Db.stud.insert({name:”Ravi”, marks:80});
+Db.stud.insert({name:”Ravi”, marks:90});
+Db.stud.insert({name:”Avi”, marks:75});
+Db.stud.insert({name:”Nilesh”, marks:35});
+Db.stud.insert({name:”Nilesh”, marks:90});
+Db.stud.find();
+Db.mapReduce(function(){emit(this.name,1)}, function(key,values){return Array.sum(values)}, {out:”name_total”});
+Db.name_total.find();
+Use ass3;
+Db.ass3.insert({roll:1, name:”navin”, subject:”oop”, marks:78});
+Db.ass3.insert({roll:1, name:”navin”, subject:”oop”, marks:78});
+Db.ass3.insert({roll:1, name:”navin”, subject:”oop”, marks:78});
+Db.ass3.insert({roll:1, name:”navin”, subject:”oop”, marks:78});
+Db.ass3.insert({roll:1, name:”navin”, subject:”oop”, marks:78});
+Var mapFunc = function(){emit(this.subject, this.marks);}
+Var redFunc = function(key,values){var marks=0; for(var i=0; i<values.length; i++){marks+=values[i];} return markss;}
+Db.ass3.mapReduce(mapFunc,redFunc,{out:”total”});
+Db.total.find();

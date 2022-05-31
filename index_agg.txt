@@ -1,0 +1,21 @@
+10. MongoDb Indexing and Aggregation
+
+Use ass3;
+Db.ass3.insert({no:18, name:”Virat”, team:”RCB”});
+Db.ass3.insert({no:18, name:”Virat”, team:”RCB”});
+Db.ass3.insert({no:18, name:”Virat”, team:”RCB”});
+Db.ass3.find();
+Db.ass3.find().pretty();
+Db.ass3.createIndex({name:1});
+Db.ass3.getIndexes();
+Db.ass3.find().sort({name:1});
+Db.ass3.find().sort({name:-1});
+Db.ass3.ensureIndex({no:1}, {unique:true});
+Db.ass3.insert({no:7, name:”Dhoni”, team:”CSK”});
+Db.ass3.find();
+Db.ass3.aggregate([{$group:{_id:”$subject”, marks:{$min:”$marks”}}}])
+Db.ass3.aggregate([{$group:{_id:”$subject”, marks:{$max:”$marks”}}}])
+Db.ass3.aggregate([{$group:{_id:”$subject”, marks:{$avg:”$marks”}}}])
+Db.ass3.aggregate([{$group:{_id:”$subject”, marks:{$first:”$marks”}}}])
+Db.ass3.aggregate([{$group:{_id:”$subject”, marks:{$last:”$marks”}}}])
+Db.ass3.aggregate([{$group:{_id:”$subject”, marks:{$sum:”$marks”}}}])

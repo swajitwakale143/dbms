@@ -1,0 +1,24 @@
+SQL Queries – Table, View, Index, Sequence, Synonym, different constraints
+
+Mysql  -u root –p
+Show databases;
+Create database ass2;
+Use ass2;
+Show tables;
+Create table employee(em_id int, em_name char(20), em_join_date date, primary key(em_id));
+Desc employee;
+Create table emp_finance(pay_id int auto_increment, em_id int, emp_salary int, emp_contract date, foreign key(em_id) references employee(em_id), primary key(pay_id));
+Desc emp_finance;
+Insert into employee values(1, ‘ram’, ‘2020/09/15’);
+Insert into employee values(1, ‘ram’, ‘2020/09/15’);
+Insert into employee values(1, ‘ram’, ‘2020/09/15’);
+Select * from employee;
+Insert into emp_finance values(1, 1, 2000, ‘2021/01/21’);
+Insert into emp_finance values(null, 3, 4000, ‘2021/01/22’);
+Select * from emp_finance;
+Create view EmpDetails as select e.em_id, e.em_name, f.em_salary from employee as e inner join emp_finance as f where e.em_id = f.em_id;
+Select * from EmpDetails;
+Alter table emp_finance add index salary(em_salary);
+Select * from emp_finance;
+Show tables;
+Select * from employee/select * from emp_finance/select * from EmpDetails/desc employee;
