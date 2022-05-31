@@ -1,0 +1,65 @@
+Trigger
+
+Create database ass6;
+Use ass6;
+Show tables;
+Create table stud(sid int primary key, name char(20), class char(20), age int, issued char(1));
+Create table returned(sid int, bname char(20), bauthor char(20));
+Insert into stud values(1, ‘ram’, ’11-A’, 16, ‘I’);
+Create table issued(sid int, bname char(20));
+Alter table add column bname char(20);
+Desc stud;
+
+
+
+delimiter //
+create trigger tr_ins_stud
+before insert
+on stud
+for each row
+begin
+insert into issued values(new.sid, new.bname);
+end;
+//
+
+Delimiter ;
+Insert into stud values(2, ‘karan’, ‘2-A’, 20, ‘I’, ‘my story’);
+Select * from issued;
+
+
+delimiter //
+create trigger tr_del_stud
+after delete
+on stud
+for each row
+begin
+delete from issued where sid=old.sid;
+end;
+//
+
+Delimiter ;
+
+Delete from stud where sid=2;
+Select * from issued;
+
+
+delimiter //
+create trigger tr_up_issued
+after update
+on stud
+for each row
+begin
+update issued
+set sid=new.sid where sid=old.sid;
+end;
+//
+
+Delimiter;
+
+Select * from stud;
+Insert into stud values(2, ‘karan’, ‘2-A’, 20, ‘I’, ‘my story’);
+Select * from stud;
+Update stud set sid=3 where sid=2;
+Select * from stud;
+Select * from issued;
+Show triggers;
